@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Texneutral Premium Gallery</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #0b0b0b;
+      color: #fff;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px 20px;
+      height: 64px;
+      gap: 18px;
+    }
+
+    .brand { display:flex; align-items:center; gap:12px }
+    .brand img { height: 44px; width: auto; border-radius: 8px; object-fit: contain; }
+    .brand h1 { font-weight: 600; font-size: 1rem; letter-spacing: 1px; display:none; }
+
+    nav { display: flex; align-items: center; flex: 1; }
+    nav ul { list-style: none; display: flex; gap: 18px; margin-left: auto; align-items:center; }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color .2s, transform .15s;
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+    nav ul li a:hover { color: #000; background: #ff7b00; transform: translateY(-2px); }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      width: 24px;
+      height: 2px;
+      background: #fff;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #ff7b00, #ff7b00);
+      color: #000;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 12px 40px rgba(255,215,0,0.15);
+      border: none;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
+      font-size: 1rem;
+    }
+    .hero .hero-inner { position: relative; z-index: 2; max-width: 980px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+    /* ensure the CTA sits lower under the heading */
+    .hero-cta { margin-top: 40px; }
+
+
+    .hero {
+      height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      margin-top: 64px;
+      overflow: hidden;
+      padding: 0 18px;
+    }
+
+    /* Responsive background with a focal position for mobile */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      /* default: cover the hero area and center the image */
+      background-image: url('bg removed.png');
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      z-index: 0;
+      transition: background-position 0.35s ease, background-size 0.35s ease;
+    }
+
+    /* overlay for contrast */
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1;
+    }
+
+    /* mobile-specific background adjustments to keep important parts visible */
+    @media (max-width: 768px) {
+      .hero::before {
+        /* move focus toward top of image (useful if subject/people/logo is near top) */
+        background-position: center top;
+        /* contain on smaller viewports so the full image is visible without heavy cropping */
+        background-size: contain;
+      }
+      .hero {
+        height: 75vh;  /* ensure good visible area on mobile */
+      }
+    }
+
+    .hero .hero-inner { position: relative; z-index: 2; max-width: 980px; padding-top: 28px; }
+    .hero h2 { font-size: clamp(1.8rem, 5vw, 3rem); color: #fff; padding: 0 10px; line-height: 1.05; }
+    .hero p.lead { margin-top: 12px; color: #e9e7e0; font-size: 1rem; max-width: 720px; margin-left: auto; margin-right: auto; }
+
+    .panel {
+      width: 90%;
+      max-width: 1100px;
+      margin: 80px auto;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      animation: fadeIn 1s ease forwards;
+    }
+    .panel h3 { text-align: center; font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 24px; font-weight: 500; letter-spacing: 1px; color: #fff; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .thumbnail-panel { width: 100%; height: 100px; border-radius: 15px; background: rgba(255,255,255,0.05); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 25px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; color: #ccc; font-size: 1rem; letter-spacing: 1px; cursor: pointer; transition: all .3s ease; }
+    .thumbnail-panel:hover { transform: translateY(-4px); color: #fff; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; opacity: 0; max-height: 0; overflow: hidden; transform: translateY(20px); transition: all .5s ease; }
+    .grid.active { opacity: 1; max-height: 2000px; transform: translateY(0); margin-top: 20px; }
+    .grid img { width: 100%; height: 140px; object-fit: cover; border-radius: 15px; transition: transform .3s ease, box-shadow .3s ease; cursor: zoom-in; }
+    .grid img:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
+
+    .about p { font-size: 1rem; line-height: 1.7; text-align: center; color: #ddd; max-width: 850px; margin: 0 auto; }
+
+    .contact-info { text-align: center; color: #ccc; font-size: .95rem; }
+    .contact-info a { color: #ff7b00; text-decoration: none; }
+
+    .contact-form { margin-top: 25px; display: flex; flex-direction: column; gap: 12px; max-width: 480px; margin-inline: auto; }
+    .contact-form input, .contact-form textarea { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px 14px; border-radius: 10px; font-family: inherit; font-size: .95rem; }
+    .contact-form button { background: #ff7b00; color: #000; border: none; border-radius: 10px; padding: 12px 15px; font-weight: 600; cursor: pointer; transition: background .3s ease; }
+    .contact-form button:hover { background: #ff7b00; }
+
+    footer { text-align: center; padding: 30px; color: #999; font-size: .85rem; }
+
+    @media (max-width: 768px) {
+      nav ul { display: none; flex-direction: column; gap: 12px; margin-top: 10px; }
+      nav ul.active { display: flex; position: absolute; top: 64px; left: 0; width: 100%; background: rgba(0,0,0,0.95); padding: 16px 20px; }
+      .menu-toggle { display: flex; }
+      .panel { padding: 20px; margin: 60px 10px; }
+      .thumbnail-panel { height: 90px; font-size: .9rem; }
+      .grid img { height: 120px; }
+      .hero { height: 70vh; }
+    }
+
+    @media (max-width: 480px) {
+      .panel h3 { font-size: 1.4rem; }
+      .about p { font-size: .95rem; }
+      .grid img { height: 100px; }
+      .hero-cta { width: 100%; justify-content: center; padding: 12px; font-size: .98rem; }
+    }
+
+    /* =========================
+       LIGHTBOX / GALLERY STYLES
+       ========================= */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 3000;
+      inset: 0;
+      background-color: rgba(0,0,0,0.92);
+      backdrop-filter: blur(6px);
+      overflow: auto; /* allow scrolling if image is taller/wider than viewport */
+      -webkit-overflow-scrolling: touch;
+      padding: 20px 10px;
+    }
+
+    .lightbox-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 100%;
+      padding: 24px;
+      position: relative;
+    }
+
+    /* container for image so it can scroll if large and center properly */
+    .lightbox-figure {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .lightbox-content {
+      display: block;
+      max-width: 95%;
+      max-height: 92vh;
+      width: auto;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      object-fit: contain;
+    }
+
+    .lightbox .close {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      font-size: 34px;
+      color: #fff;
+      cursor: pointer;
+      z-index: 3100;
+      line-height: 1;
+      background: rgba(0,0,0,0.3);
+      padding: 6px 10px;
+      border-radius: 8px;
+      backdrop-filter: blur(4px);
+    }
+
+    .lightbox .caption {
+      text-align: center;
+      color: #ddd;
+      margin-top: 12px;
+      font-size: 0.95rem;
+      max-width: 95%;
+      word-wrap: break-word;
+    }
+
+    /* Prev / Next buttons */
+    .lb-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.45);
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+    .lb-prev { left: 18px; }
+    .lb-next { right: 18px; }
+    .lb-nav svg { width: 22px; height: 22px; display: block; margin-left: 2px; fill: #fff; }
+
+    /* hide nav on very small screens unless hovered or touch */
+    @media (max-width: 520px) {
+      .lb-nav { width: 44px; height: 44px; }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.98); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Improved WhatsApp floating button */
+    .whatsapp-float {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 68px;
+      height: 68px;
+      display: inline-grid;
+      place-items: center;
+      background: transparent;
+      border-radius: 50%;
+      z-index: 2000;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .2s ease;
+      opacity: 0.99;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      overflow: visible;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+    }
+
+    .whatsapp-float:focus { outline: 2px solid rgba(37,211,102,0.25); outline-offset: 4px; }
+
+    .whatsapp-plate {
+      display: inline-grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      background: #ffffff;
+      border-radius: 50%;
+      padding: 6px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      overflow: visible;
+    }
+
+    .whatsapp-plate svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: 40px;
+      max-height: 40px;
+      box-sizing: content-box;
+    }
+
+    .whatsapp-float:hover { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(0,0,0,0.45); }
+
+    /* small utility for focused image outlines */
+    .grid img:focus {
+      outline: 3px solid rgba(255,123,0,0.25);
+      outline-offset: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="c5.png" alt="Texneutral Logo" />
+      <h1>Texneutral</h1>
+    </div>
+
+    <nav>
+      <div class="menu-toggle" id="menuToggle" aria-label="Menu toggle" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+
+      <!-- Navigation items aligned to the right using margin-left: auto on the ul -->
+      <ul id="navList">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#works">Our Works</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <!-- removed header catalogue button as requested -->
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-inner">
+        <h2>Welcome to Texneutral</h2>
+        <p class="lead">Premium corporate T-shirts — Polo and Round Neck, expert finishing and reliable delivery for brands that take pride in appearance.</p>
+
+        <div style="display:flex;justify-content:center;">
+          <a href="Texneutral's Catalogue.pdf" class="hero-cta" target="_blank" rel="noopener" download>
+            View Catalogue
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M7 7l5 5-5 5" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="panel about">
+      <h3>About Us</h3>
+      <p>
+        Welcome to Texneutral, your trusted partner in premium corporate T-shirt manufacturing. We specialize in crafting Polo and Round Neck T-shirts using high-quality materials designed for comfort, durability, and style.
+
+        With a wide range of unique colors and professional printing and embroidery options, we help your brand stand out effortlessly.
+        
+        At Texneutral, we combine fine craftsmanship, perfect fit, and superior finishing to deliver T-shirts that look as professional as your brand. Each garment reflects the dedication of over a hundred skilled hands, bringing together precision, care, and the timeless craftsmanship that define Texneutral’s tradition over years.
+      </p>
+    </section>
+
+    <section id="works" class="panel">
+      <h3>Our Works</h3>
+      <div class="thumbnail-panel" data-target="worksGrid">Click to View Works</div>
+      <div class="grid" id="worksGrid">
+        <img src="work1.jpg" alt="Work 1">
+        <img src="work2.jpg" alt="Work 2">
+        <img src="work3.jpg" alt="Work 3">
+        <img src="work4.jpg" alt="Work 4">
+        <img src="work5.jpg" alt="Work 5">
+        <img src="work6.JPG" alt="Work 6">
+        <img src="work7.JPG" alt="Work 7">
+        <img src="work8.jpg" alt="Work 8">
+        <img src="work9.jpg" alt="Work 9">
+        <img src="work10.jpg" alt="Work 10">
+        <img src="work12.jpg" alt="Work 12">
+        <img src="work13.jpg" alt="Work 13">
+        <img src="work14.jpg" alt="Work 14">
+        <img src="work15.png" alt="Work 15">
+        <img src="work16.jpg" alt="Work 16">
+        <img src="work17.jpg" alt="Work 17">
+        <img src="work18.jpg" alt="Work 18">
+        <img src="Work 19.png" alt="Work 19">
+        <img src="Work 20.png" alt="Work 20">
+        <img src="Work 21.png" alt="Work 21">
+      </div>
+    </section>
+
+    <section id="reviews" class="panel">
+      <h3>Customer Reviews</h3>
+      <div class="thumbnail-panel" data-target="reviewsGrid">Click to View Reviews</div>
+      <div class="grid" id="reviewsGrid">
+        <img src="review1.jpg" alt="Review 1">
+        <img src="review2.jpg" alt="Review 2">
+        <img src="review3.jpg" alt="Review 3">
+        <img src="review4.jpg" alt="Review 4">
+        <img src="review5.jpg" alt="Review 5">
+        <img src="review6.jpg" alt="Review 6">
+      </div>
+    </section>
+
+    <section id="contact" class="panel">
+      <h3>Contact Us</h3>
+      <div class="contact-info">
+        <p>Email: <a href="mailto:texneutral@gmail.com">texneutral@gmail.com</a></p>
+        <p>Phone: <a href="tel:+919344381870">+91 9344381870</a> | <a href="tel:+919342703197">+91 9342703197</a></p>
+        <p>
+          Address:
+          <a href="https://maps.app.goo.gl/HATpzUkfKQ8RUgKm6" target="_blank" rel="noopener">
+            59/1-13/2, Marappa Gounder Plaza, HDFC Bank Upstairs,</p> West Car Street, Tiruchengode, Tamil Nadu - 637211, India.
+          </a>
+        </p>
+        <p>GSTIN: <a href="#" aria-label="GSTIN 33HKNPR0160J1ZW">33HKNPR0160J1ZW</a></p>
+      </div>
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/xqadoqkr" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="_replyto" placeholder="Your Email" required>
+        <input type="tel" name="phone" placeholder="Phone Number">
+        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+        <div id="formStatus" style="display:none;margin-top:10px"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>© 2025 Texneutral. All rights reserved.</footer>
+
+  <script>
+    const toggleBtn = document.getElementById('menuToggle');
+    const navList = document.getElementById('navList');
+    toggleBtn.addEventListener('click', ()=> navList.classList.toggle('active'));
+
+    // close mobile menu when a nav link is clicked
+    document.querySelectorAll('#navList a').forEach(a => {
+      a.addEventListener('click', () => {
+        navList.classList.remove('active');
+      });
+    });
+
+    // Keep original thumbnail text if you want to revert easily
+    document.querySelectorAll('.thumbnail-panel').forEach(panel => {
+      panel.dataset.origText = panel.textContent.trim();
+    });
+
+    document.querySelectorAll('.thumbnail-panel').forEach(panel => {
+      const target = document.getElementById(panel.dataset.target);
+      panel.addEventListener('click', () => {
+        target.classList.toggle('active');
+        // keep original phrasing when hidden
+        panel.textContent = target.classList.contains('active') ? 'Hide Section' : panel.dataset.origText;
+      });
+    });
+
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('formStatus');
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const formData = new FormData(form);
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: formData, headers: {'Accept':'application/json'} });
+        statusEl.textContent = res.ok ? 'Thanks — your message has been sent!' : 'Error sending message.';
+        statusEl.style.color = res.ok ? '#c8ffd7' : '#ffb4b4';
+        statusEl.style.display = 'block';
+        form.reset();
+      } catch {
+        statusEl.textContent = 'Network error. Try again later.';
+        statusEl.style.color = '#ffb4b4';
+        statusEl.style.display = 'block';
+      }
+    });
+
+    // keyboard accessibility for menu toggle (Enter/Space)
+    toggleBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        navList.classList.toggle('active');
+      }
+    });
+  </script>
+
+  <!-- WhatsApp floating button (fixed, visible while scrolling) -->
+  <a href="https://wa.me/919344381870?text=Hello%20Texneutral%2C%20I%27m%20interested%20in%20your%20products" target="_blank" rel="noopener" aria-label="Chat with Texneutral on WhatsApp" class="whatsapp-float">
+    <span class="whatsapp-plate" aria-hidden="true">
+      <svg viewBox="0 0 32 32" width="28" height="28" focusable="false">
+        <path fill="#25D366" d="M16 2C8.28 2 2 8.28 2 16c0 2.77.77 5.35 2.1 7.6L2 30l6.7-2.1C10.63 29.02 13.27 30 16 30c7.72 0 14-6.28 14-14S23.72 2 16 2z"/>
+        <path fill="#fff" d="M22.4 19.1c-.3-.15-1.78-.88-2.05-.98-.27-.1-.46-.15-.66.15s-.76.98-.93 1.18c-.17.2-.33.22-.62.07-.29-.15-1.23-.45-2.34-1.45-.87-.77-1.46-1.71-1.63-2-.17-.27-.02-.42.13-.57.13-.13.29-.33.44-.5.15-.17.2-.27.3-.45.1-.18.05-.34-.02-.49-.07-.15-.66-1.58-.9-2.17-.24-.57-.49-.49-.67-.5-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.34-.27.27-1.04 1.02-1.04 2.48s1.06 2.88 1.2 3.08c.15.2 2.07 3.16 5.02 4.43 2.95 1.27 2.95.85 3.48.8.53-.04 1.72-.7 1.96-1.38.24-.68.24-1.26.17-1.38-.07-.12-.27-.18-.57-.33z"/>
+      </svg>
+    </span>
+  </a>
+
+  <!-- Lightbox Modal (includes prev/next nav) -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <div class="lightbox-inner" id="lightboxInner" tabindex="-1">
+      <figure class="lightbox-figure" id="lightboxFigure" aria-live="polite">
+        <img class="lightbox-content" id="lightboxImg" alt="">
+      </figure>
+    </div>
+
+    <div class="caption" id="lightboxCaption" style="display:none" aria-hidden="false"></div>
+
+    <button id="lightboxClose" class="close" aria-label="Close image viewer">&times;</button>
+
+    <!-- Prev/Next -->
+    <button id="lbPrev" class="lb-nav lb-prev" aria-label="Previous image" title="Previous">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </button>
+    <button id="lbNext" class="lb-nav lb-next" aria-label="Next image" title="Next">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+    </button>
+  </div>
+
+  <script>
+    (function () {
+      // Elements
+      const worksImgs = Array.from(document.querySelectorAll('#worksGrid img'));
+      const reviewsImgs = Array.from(document.querySelectorAll('#reviewsGrid img'));
+      // Combined gallery order: works then reviews (keeps user's DOM order)
+      const gallery = worksImgs.concat(reviewsImgs);
+      // Set dataset-index so we can map easily
+      gallery.forEach((img, i) => img.dataset.galleryIndex = i);
+
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxCaption = document.getElementById('lightboxCaption');
+      const lightboxClose = document.getElementById('lightboxClose');
+      const lbPrev = document.getElementById('lbPrev');
+      const lbNext = document.getElementById('lbNext');
+      const lightboxInner = document.getElementById('lightboxInner');
+
+      let currentIndex = 0;
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let touchEndY = 0;
+      const SWIPE_MIN = 40; // px
+
+      // Open lightbox by index
+      function openLightboxByIndex(index) {
+        if (index < 0 || index >= gallery.length) return;
+        currentIndex = index;
+        const img = gallery[currentIndex];
+        const fullSrc = img.dataset.full || img.src;
+        const alt = img.alt || '';
+        openLightbox(fullSrc, alt);
+      }
+
+      // Open lightbox (src, altText)
+      function openLightbox(src, altText) {
+        lightboxImg.src = src;
+        lightboxImg.alt = altText;
+        if (altText && altText.trim() !== '') {
+          lightboxCaption.style.display = 'block';
+          lightboxCaption.textContent = altText;
+        } else {
+          lightboxCaption.style.display = 'none';
+          lightboxCaption.textContent = '';
+        }
+
+        lightbox.style.display = 'block';
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        // ensure starting scroll is top-left of lightbox
+        lightbox.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+        // update nav visibility (disabled state)
+        updateNavState();
+
+        // focus close for keyboard users
+        lightboxClose.focus();
+      }
+
+      function closeLightbox() {
+        lightbox.style.display = 'none';
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        lightboxImg.src = '';
+      }
+
+      function goNext() {
+        const next = currentIndex + 1;
+        if (next < gallery.length) {
+          currentIndex = next;
+          const img = gallery[currentIndex];
+          lightboxImg.src = img.dataset.full || img.src;
+          lightboxImg.alt = img.alt || '';
+          if (img.alt && img.alt.trim() !== '') {
+            lightboxCaption.style.display = 'block';
+            lightboxCaption.textContent = img.alt;
+          } else {
+            lightboxCaption.style.display = 'none';
+            lightboxCaption.textContent = '';
+          }
+          updateNavState();
+        }
+      }
+
+      function goPrev() {
+        const prev = currentIndex - 1;
+        if (prev >= 0) {
+          currentIndex = prev;
+          const img = gallery[currentIndex];
+          lightboxImg.src = img.dataset.full || img.src;
+          lightboxImg.alt = img.alt || '';
+          if (img.alt && img.alt.trim() !== '') {
+            lightboxCaption.style.display = 'block';
+            lightboxCaption.textContent = img.alt;
+          } else {
+            lightboxCaption.style.display = 'none';
+            lightboxCaption.textContent = '';
+          }
+          updateNavState();
+        }
+      }
+
+      function updateNavState() {
+        // disable buttons at ends for clarity
+        lbPrev.disabled = (currentIndex <= 0);
+        lbNext.disabled = (currentIndex >= gallery.length - 1);
+        lbPrev.style.opacity = lbPrev.disabled ? '0.45' : '1';
+        lbNext.style.opacity = lbNext.disabled ? '0.45' : '1';
+      }
+
+      // Attach click handlers to all gallery images
+      gallery.forEach(img => {
+        img.tabIndex = 0;
+        img.style.touchAction = 'manipulation'; // nicer on touch devices
+        img.addEventListener('click', () => {
+          const idx = Number(img.dataset.galleryIndex || 0);
+          openLightboxByIndex(idx);
+        });
+        img.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const idx = Number(img.dataset.galleryIndex || 0);
+            openLightboxByIndex(idx);
+          }
+        });
+      });
+
+      // Prev/Next buttons
+      lbNext.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goNext();
+      });
+      lbPrev.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goPrev();
+      });
+
+      // Close button
+      lightboxClose.addEventListener('click', closeLightbox);
+
+      // Clicking on overlay closes (but clicking inner figure does not)
+      lightbox.addEventListener('click', (e) => {
+        // if clicked directly on overlay (not on the image container)
+        if (e.target === lightbox) closeLightbox();
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (lightbox.style.display === 'block') {
+          if (e.key === 'ArrowRight') { goNext(); }
+          else if (e.key === 'ArrowLeft') { goPrev(); }
+          else if (e.key === 'Escape') { closeLightbox(); }
+        }
+      });
+
+      // Touch swipe for mobile in the lightbox area
+      lightbox.addEventListener('touchstart', (e) => {
+        if (!e.touches || e.touches.length === 0) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchEndX = 0;
+        touchEndY = 0;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchmove', (e) => {
+        if (!e.touches || e.touches.length === 0) return;
+        touchEndX = e.touches[0].clientX;
+        touchEndY = e.touches[0].clientY;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', (e) => {
+        if (!touchEndX) return;
+        const dx = touchEndX - touchStartX;
+        const dy = touchEndY - touchStartY;
+        // if horizontal swipe is dominant
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > SWIPE_MIN) {
+          if (dx < 0) { // swipe left -> next
+            goNext();
+          } else { // swipe right -> prev
+            goPrev();
+          }
+        }
+        // reset
+        touchStartX = touchStartY = touchEndX = touchEndY = 0;
+      }, { passive: true });
+
+      // Prevent accidental focus leaving lightbox (simple trap)
+      document.addEventListener('focus', function (event) {
+        if (lightbox.style.display === 'block' && !lightbox.contains(event.target)) {
+          event.stopPropagation();
+          lightboxClose.focus();
+        }
+      }, true);
+
+      // Make sure nav visibility state is correct on load
+      updateNavState();
+
+      // Optional: support arrow icon keyboard focus style
+      [lbPrev, lbNext].forEach(btn => {
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            btn.click();
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
