@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Texneutral | Clothing Manufacturing</title>
+
+  <!-- Basic SEO -->
+  <meta name="description" content="Texneutral manufactures premium corporate T-shirts, polos, uniforms and custom apparel with high-quality printing and on-time delivery." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Social Preview (update URL + image as needed) -->
+  <meta property="og:title" content="Texneutral | Premium Clothing Manufacturing" />
+  <meta property="og:description" content="Premium corporate T-shirts — Polo and Round Neck, expert finishing and reliable delivery for brands that take pride in appearance." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://your-website-url.com" />
+  <meta property="og:image" content="https://your-website-url.com/preview.jpg" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Premium font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #020617;
+      --card: #0b1220;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --accent-1: #fb7185; /* coral */
+      --accent-2: #f97316; /* orange */
+      --accent-3: #facc15; /* yellow */
+      --border-subtle: rgba(148,163,184,0.35);
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top left, #0b1120 0, #020617 50%, #020617 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+
+    /* Make header + hero + works + client images non-interactive */
+    .brand-logo,
+    .hero-art img,
+    .works-item img,
+    .client-card img {
+      pointer-events: none;
+    }
+
+    /* Decorative background blobs (subtle) */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 999px;
+      filter: blur(70px);
+      opacity: 0.35;
+    }
+
+    body::before {
+      width: 420px;
+      height: 420px;
+      top: -80px;
+      right: -120px;
+      background: radial-gradient(circle, #fb7185, transparent 60%);
+    }
+
+    body::after {
+      width: 380px;
+      height: 380px;
+      bottom: -120px;
+      left: -100px;
+      background: radial-gradient(circle, #facc15, transparent 60%);
+    }
+
+    /* Layout */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(2,6,23,0.95), rgba(2,6,23,0.90));
+      border-bottom: 1px solid rgba(30,64,175,0.5);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .brand-logo {
+      height: 20px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    nav ul {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    nav a {
+      position: relative;
+      padding-bottom: 0.1rem;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.18rem;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent-1), var(--accent-3));
+      transition: width 0.2s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: rgba(15,23,42,0.8);
+      cursor: pointer;
+      color: var(--text-main);
+      transition: all 0.16s ease;
+    }
+
+    .nav-cta:hover {
+      border-color: rgba(248,250,252,0.9);
+      background: rgba(15,23,42,1);
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 3.8rem 0 3.4rem;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 3.2fr) minmax(0, 2.2fr);
+      gap: 2.8rem;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.7rem 0.2rem 0.25rem;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.6);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .badge-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #22c55e, #16a34a);
+      box-shadow: 0 0 10px rgba(34,197,94,0.8);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 3vw + 1.4rem, 3.2rem);
+      line-height: 1.05;
+      margin-bottom: 0.9rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero h1 span.gradient {
+      background: linear-gradient(to right, var(--accent-1), var(--accent-2), var(--accent-3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      max-width: 30rem;
+      font-size: 0.95rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+      margin-bottom: 1.4rem;
+    }
+
+    .btn-primary {
+      padding: 0.78rem 1.6rem;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(120deg, var(--accent-1), var(--accent-2), var(--accent-3));
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #111827;
+      cursor: pointer;
+      box-shadow: 0 16px 40px rgba(248,113,113,0.55);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      width: auto;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow: 0 22px 55px rgba(251,146,60,0.7);
+    }
+
+    .hero-art {
+      border-radius: 1.8rem;
+      overflow: hidden;
+      position: relative;
+      background: radial-gradient(circle at top left, rgba(248,113,113,0.18), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(250,204,21,0.2), transparent 60%),
+                  #020617;
+      border: 1px solid rgba(148,163,184,0.45);
+      box-shadow: 0 26px 70px rgba(15,23,42,0.9);
+      min-height: 260px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    /* HERO SLIDER */
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.9s ease-in-out;
+    }
+
+    .hero-slide.active {
+      opacity: 1;
+    }
+
+    .hero-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(15,23,42,0.7);
+      color: white;
+      border: 1px solid rgba(148,163,184,0.8);
+      font-size: 1.4rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+      backdrop-filter: blur(6px);
+      z-index: 2;
+    }
+
+    .hero-btn:hover {
+      background: rgba(15,23,42,0.9);
+      border-color: white;
+    }
+
+    .hero-btn.prev {
+      left: 10px;
+    }
+
+    .hero-btn.next {
+      right: 10px;
+    }
+
+    /* Sections */
+
+    section {
+      padding: 3.3rem 0;
+      scroll-margin-top: 80px; /* helps with sticky header */
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1.4rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-title-wrap {
+      max-width: 420px;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent-1);
+      margin-bottom: 0.35rem;
+    }
+
+    .section-title {
+      font-size: 1.55rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 340px;
+    }
+
+    /* ABOUT */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
+      gap: 2.2rem;
+      align-items: flex-start;
+    }
+
+    .about-text p {
+      font-size: 0.94rem;
+      color: #e5e7eb;
+      margin-bottom: 0.9rem;
+    }
+
+    .about-text p + p {
+      color: var(--text-muted);
+    }
+
+    .about-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin-top: 1.2rem;
+    }
+
+    .about-pill {
+      padding: 0.9rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+      background: rgba(15,23,42,0.92);
+    }
+
+    .about-pill strong {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.12rem;
+      color: #e5e7eb;
+    }
+
+    .about-card {
+      border-radius: 1.4rem;
+      padding: 1.2rem 1.15rem;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.9), #020617);
+      border: 1px solid rgba(148,163,184,0.55);
+      font-size: 0.85rem;
+      color: #e5e7eb;
+    }
+
+    .about-card h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .about-card ul {
+      list-style: none;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .about-card li::before {
+      content: "•";
+      margin-right: 0.4rem;
+      color: var(--accent-2);
+    }
+
+    /* OUR WORKS */
+
+    .works-wrapper {
+      border-radius: 1.4rem;
+      border: 1px solid rgba(30,64,175,0.7);
+      background: radial-gradient(circle at top, #020617, #020617 60%, #020617);
+      padding: 1.25rem 1.1rem 1.6rem;
+      overflow: hidden;
+      box-shadow: 0 22px 60px rgba(15,23,42,0.95);
+    }
+
+    .works-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.9rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .works-badge {
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.68rem;
+    }
+
+    .works-marquee {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      border: 1px solid rgba(15,23,42,0.9);
+      background: radial-gradient(circle at top left, rgba(248,113,113,0.18), transparent 60%),
+                  radial-gradient(circle at bottom right, rgba(250,204,21,0.22), transparent 60%),
+                  #020617;
+    }
+
+    .works-track {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      min-width: max-content;
+      animation: scrollWorks 68s linear infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @keyframes scrollWorks {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .works-item {
+      flex: 0 0 240px;
+      height: 280px;
+      border-radius: 0.85rem;
+      overflow: hidden;
+      position: relative;
+      background: #020617;
+    }
+
+    .works-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.1);
+      transform: scale(1.01);
+    }
+
+    .works-caption {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 0.45rem 0.6rem 0.55rem;
+      background: linear-gradient(to top, rgba(15,23,42,0.95), transparent);
+      font-size: 0.74rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #e5e7eb;
+    }
+
+    .works-caption span {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .works-note {
+      margin-top: 0.75rem;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    /* CLIENTS */
+
+    .clients-grid {
+      border-radius: 1.4rem;
+      border: 1px solid rgba(30,64,175,0.7);
+      background: rgba(15,23,42,0.9);
+      padding: 1.3rem 1.1rem;
+      box-shadow: 0 20px 60px rgba(15,23,42,1);
+    }
+
+    .client-logos {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .client-card {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148,163,184,0.55);
+      background: radial-gradient(circle at top, rgba(15,23,42,0.95), #020617);
+      padding: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 68px;
+    }
+
+    .client-card img {
+      width: 100%;
+      height: 100px;
+      object-fit: contain;
+      filter: grayscale(1) contrast(1.1);
+      opacity: 0.9;
+      transition: filter 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .client-card:hover img {
+      filter: none;
+      opacity: 1;
+      transform: scale(1.03);
+    }
+
+    .client-card:hover {
+      border-color: rgba(250,204,21,0.9);
+      box-shadow: 0 0 18px rgba(250,204,21,0.35);
+    }
+
+    /* CONTACT */
+
+    .contact {
+      padding-bottom: 4rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.1fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .contact-card {
+      border-radius: 1.4rem;
+      border: 1px solid rgba(30,64,175,0.7);
+      background: radial-gradient(circle at top, rgba(15,23,42,1), #020617);
+      padding: 1.4rem 1.2rem 1.3rem;
+      box-shadow: 0 22px 60px rgba(15,23,42,1);
+    }
+
+    .contact-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
+    }
+
+    form {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.28rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.95);
+      padding: 0.7rem 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #6b7280;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent-1);
+      box-shadow: 0 0 0 1px rgba(251,113,133,0.5);
+      background: rgba(15,23,42,1);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .detail-card {
+      border-radius: 1.1rem;
+      border: 1px solid rgba(30,64,175,0.7);
+      background: radial-gradient(circle at top, rgba(15,23,42,0.98), #020617);
+      padding: 0.9rem 1rem;
+      font-size: 0.82rem;
+      color: #e5e7eb;
+    }
+
+    .detail-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 0.18rem;
+    }
+
+    .detail-main {
+      font-size: 0.88rem;
+    }
+
+    .detail-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    footer {
+      border-top: 1px solid rgba(31,41,55,0.9);
+      padding: 0.9rem 0 1.2rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+      background: #020617;
+    }
+
+    footer span {
+      color: var(--accent-1);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 960px) {
+      .hero-inner,
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero {
+        padding-top: 3rem;
+      }
+
+      .hero-art {
+        order: -1;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .client-logos {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding-top: 2.4rem;
+      }
+
+      .about-points {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .client-logos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .works-track {
+        animation-duration: 26s;
+      }
+    }
+
+    /* Extra tweaks for very small phones (≤ 480px) */
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1rem;
+      }
+
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        gap: 0.75rem 1.3rem;
+        font-size: 0.8rem;
+      }
+
+      .hero {
+        padding: 2.4rem 0 2.6rem;
+      }
+
+      .hero h1 {
+        font-size: 2.1rem;
+      }
+
+      .hero-subtitle {
+        font-size: 0.9rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary {
+        width: 100%;
+        text-align: center;
+      }
+
+      .client-card img {
+        height: 70px;
+      }
+
+      .works-item {
+        flex: 0 0 190px;
+        height: 220px;
+      }
+
+      .section-title {
+        font-size: 1.35rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header oncontextmenu="return false;">
+    <div class="container">
+      <div class="nav">
+        <div class="logo">
+          <img src="c5.png" alt="Texneutral logo" class="brand-logo" draggable="false" oncontextmenu="return false;" />
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#works">Our works</a></li>
+            <li><a href="#clients">Clients</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div> <!-- .nav -->
+    </div> <!-- .container -->
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <!-- Left: text -->
+        <div>
+          <div class="badge">
+            <div class="badge-dot"></div>
+            <span>Clothing manufacturing • Versatile Fabrics • Customisation</span>
+          </div>
+          <h1>
+            Premium <span class="gradient">clothing manufacturing</span> 
+          </h1>
+          <p class="hero-subtitle">
+            Premium corporate T-shirts — Polo and Round Neck, expert finishing and reliable delivery for brands that take pride in appearance
+          </p>
+
+          <!-- MAIN CTAs (eye focus area) -->
+          <div class="hero-actions">
+            <!-- CATALOGUE button – opens PDF in NEW TAB -->
+            <a href="TEXNEUTRAL.pdf" target="_blank" rel="noopener noreferrer">
+              <button class="btn-primary">View Catalogue</button>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Hero slider with manual buttons only -->
+        <aside class="hero-art" aria-hidden="true" oncontextmenu="return false;">
+          <img class="hero-slide active" src="Akka Image.jpg" alt="Texneutral custom T-shirt 1" draggable="false" oncontextmenu="return false;" />
+          <img class="hero-slide" src="revie5.jpg" alt="Texneutral custom T-shirt 2" draggable="false" oncontextmenu="return false;" />
+          <img class="hero-slide" src="Weared bookymet.png" alt="Texneutral custom T-shirt 3" draggable="false" oncontextmenu="return false;" />
+          <img class="hero-slide" src="work15.png" alt="Texneutral custom T-shirt 4" draggable="false" oncontextmenu="return false;" />
+
+          <button class="hero-btn prev" aria-label="Previous slide">❮</button>
+          <button class="hero-btn next" aria-label="Next slide">❯</button>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT US -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="eyebrow">About Texneutral</div>
+          <h2 class="section-title">The Journey Begins</h2>
+        </div>
+        <p class="section-subtitle">
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            We are a group of young dreamers, united by a passion for textiles.
+            With limited resources but limitless ambition, we began our journey.
+            Every stitch and print carries a piece of our hope and hard work.
+            And today, we create not just apparel—but the dreams we once whispered.
+          </p>
+          <p>
+          </p>
+
+          <div class="about-points">
+            <div class="about-pill">
+              <strong>Customisation</strong>
+              Each T-shirt can be completely customized to meet individual customer specifications.
+            </div>
+            <div class="about-pill">
+              <strong>Printcraft</strong>
+              We specialize in high-quality DTF printing, embroidery, and screen printing to meet a wide range of customization needs.
+            </div>
+          </div>
+        </div>
+
+        <div class="about-card">
+          <h3>Categories we manufacture</h3>
+          <ul>
+            <li>Round neck Tees, Oversized Tees</li>
+            <li>Corporate Polos, Uniforms, Casual Wears</li>
+            <li>Sports, Gym wear</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR WORKS -->
+  <section id="works">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="eyebrow">Our works</div>
+          <h2 class="section-title"></h2>
+        </div>
+        <p class="section-subtitle">
+        </p>
+      </div>
+
+      <div class="works-wrapper" oncontextmenu="return false;">
+        <div class="works-header-row">
+          <div class="works-badge">Auto scrolling</div>
+          <div></div>
+        </div>
+
+        <!-- Auto-scrolling image marquee (non-clickable) -->
+        <div class="works-marquee">
+          <div class="works-track">
+            <div class="works-item">
+              <img src="Agritech.png" alt="Agritech custom T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+                <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="IITM.jpg" alt="IIT Madras event T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+                <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="LIK Movie.jpg" alt="Movie merchandise T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+                 <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="Work 21.png" alt="Custom team T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+                 <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="Work 20.png" alt="Custom printed T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+                 <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="work1.jpg" alt="Event T-shirt manufactured by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+                <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="Booky Met.png" alt="Booky Met T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+                <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="Maara drones.jpg" alt="Maara Drones branded T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+               <span></span>
+              </div>
+            </div>
+
+            <!-- Duplicate set for seamless loop -->
+            <div class="works-item">
+              <img src="Agritech.png" alt="Agritech custom T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+               <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="IITM.jpg" alt="IIT Madras event T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+              <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="LIK Movie.jpg" alt="Movie merchandise T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+                <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="Work 21.png" alt="Custom team T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+                <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="Work 20.png" alt="Custom printed T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+               <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="work1.jpg" alt="Event T-shirt manufactured by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+                 <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="Booky Met.png" alt="Booky Met T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+               <span></span>
+              </div>
+            </div>
+            <div class="works-item">
+              <img src="Maara drones.jpg" alt="Maara Drones branded T-shirt by Texneutral" draggable="false" oncontextmenu="return false;" />
+              <div class="works-caption">
+              <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="works-note">
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section id="clients">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="eyebrow">Our clients</div>
+          <h2 class="section-title">Colleges and teams we’ve worked with.</h2>
+        </div>
+        <p class="section-subtitle">
+        </p>
+      </div>
+
+      <div class="clients-grid" oncontextmenu="return false;">
+        <div class="client-logos">
+          <div class="client-card">
+            <img src="1.png" alt="Texneutral client logo 1" draggable="false" oncontextmenu="return false;" />
+          </div>
+          <div class="client-card">
+            <img src="2.png" alt="Texneutral client logo 2" draggable="false" oncontextmenu="return false;" />
+          </div>
+          <div class="client-card">
+            <img src="3.png" alt="Texneutral client logo 3" draggable="false" oncontextmenu="return false;" />
+          </div>
+          <div class="client-card">
+            <img src="4.png" alt="Texneutral client logo 4" draggable="false" oncontextmenu="return false;" />
+          </div>
+          <div class="client-card">
+            <img src="5.png" alt="Texneutral client logo 5" draggable="false" oncontextmenu="return false;" />
+          </div>
+          <div class="client-card">
+            <img src="50+.png" alt="Texneutral 50+ clients badge" draggable="false" oncontextmenu="return false;" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <div class="eyebrow">Contact</div>
+          <h2 class="section-title">Share your ideas with us.</h2>
+        </div>
+        <p class="section-subtitle">
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Contact form -->
+        <div class="contact-card">
+          <p class="contact-hint">
+            Fill in the form and our team will get back to you within 24 hours.
+          </p>
+
+          <form action="https://formspree.io/f/xqadoqkr" method="POST">
+            <div class="form-row">
+              <div>
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" placeholder="Your name" required />
+              </div>
+              <div>
+                <label for="brand">Company / College</label>
+                <input id="brand" name="brand" type="text" placeholder="Company / College name" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@example.com" required />
+              </div>
+              <div>
+                <label for="phone">Phone / WhatsApp</label>
+                <input id="phone" name="phone" type="tel" placeholder="+91-XXXXXXXXXX" />
+              </div>
+            </div>
+
+            <div>
+              <label for="message">Project details</label>
+              <textarea id="message" name="message" placeholder="Quantities, categories, target timeline, links to references."></textarea>
+            </div>
+
+            <div>
+              <button type="submit" class="btn-primary" style="width:100%; text-align:center; margin-top:0.25rem;">
+                Submit enquiry
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Address / Phone / Email -->
+        <div class="contact-details">
+          <div class="detail-card">
+            <div class="detail-label">Address</div>
+            <div class="detail-main">Texneutral</div>
+            <div class="detail-sub">
+              No 12, West Car Street,<br />
+              Tiruchengode, Namakkal, Tamil Nadu – 637211.<br />
+              GSTIN: 33HKNPR0160J1ZW
+            </div>
+          </div>
+
+          <div class="detail-card">
+            <div class="detail-label">Phone &amp; email</div>
+            <div class="detail-main">
+              Phone / WhatsApp: +91-9344381870 | +91 9342703197<br />
+              Email: texneutral@gmail.com
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer oncontextmenu="return false;">
+    <div class="container">
+      &copy; <span id="year"></span> <span>Texneutral</span>. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      // Set current year
+      const yearEl = document.getElementById("year");
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+
+      // HERO SLIDER SCRIPT (MANUAL ONLY)
+      const slides = document.querySelectorAll('.hero-slide');
+      const prevBtn = document.querySelector('.hero-btn.prev');
+      const nextBtn = document.querySelector('.hero-btn.next');
+
+      if (!slides.length || !prevBtn || !nextBtn) {
+        return;
+      }
+
+      let index = 0;
+
+      function showSlide(i) {
+        slides.forEach(s => s.classList.remove('active'));
+        slides[i].classList.add('active');
+      }
+
+      // Ensure first slide is visible
+      showSlide(index);
+
+      prevBtn.addEventListener('click', function () {
+        index = (index - 1 + slides.length) % slides.length;
+        showSlide(index);
+      });
+
+      nextBtn.addEventListener('click', function () {
+        index = (index + 1) % slides.length;
+        showSlide(index);
+      });
+      // No autoplay here – only manual buttons
+    });
+  </script>
+</body>
+</html>
